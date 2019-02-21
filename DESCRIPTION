@@ -1,0 +1,9 @@
+Package: codingProject2
+Type: Package
+Title: coding project Linear Models
+Version: 2019.02.19
+Author: Mertay Dayanc, Kaitlyn Grubb, 
+Maintainer: Mertay Dayanc <md2289@nau.edu>
+Description: Linear Models implementation
+License: GPL-3
+RoxygenNote: 6.1.1
