@@ -20,9 +20,9 @@ Title
 }
 \examples{
    library(codingProject2)
-   data(prostate, package = "ElemStatLearn")
-   X.mat<-prostate[1:10,1:8]
-   y.vec<-prostate[1:10, 9]
+   data(ozone, package = "ElemStatLearn")
+   X.mat<-ozone[1:10,-1]
+   y.vec<-ozone[1:10, 1]
    max.iterations <- 50
    step.size <- 0.1
    res <- LMSquareLossIterations(X.mat, y.vec, 50, 0.1)
