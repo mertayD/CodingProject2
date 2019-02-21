@@ -42,10 +42,9 @@ LMSquareLossIterations <- function(
     weight_vec <- weight_vec - (step.size/n) * gradient  
     weights_scaled_mat[,iteration] = as.vector(weight_vec)
   }
-  b <- weights_scaled_mat[1,] 
   w <- weights_scaled_mat[-1,]
   weights_mat = t(w) %*% S.diagonal.mat
-  k <- t(w) %*% S.diagonal.mat %*% mean.mat
+  b <- t(w) %*% S.diagonal.mat %*% mean.mat
   return(weights_mat)
 } 
 
