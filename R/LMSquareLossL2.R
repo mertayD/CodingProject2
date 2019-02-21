@@ -18,6 +18,7 @@ LMSquareLossL2 <- function(
   opt.thresh,
   initial.weight.vec
 ){
+  #How to decide max.iterations?
   weight_vec <- initial.weight.vec
   for(i in 1:max.iterations)
   {
