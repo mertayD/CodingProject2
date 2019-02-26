@@ -11,9 +11,9 @@
 #' @examples
 #'    library(codingProject2)
 #'    data(ozone, package = "ElemStatLearn")
-#'    X.mat<-ozone[1:10,-1]
-#'    y.vec<-ozone[1:10, 1]
-#'    max.iterations <- 50
+#'    X.mat<-ozone[1:20,-1]
+#'    y.vec<-ozone[1:20, 1]
+#'    max.iterations <- 30
 #'    step.size <- 0.1
 #'    res <- LMSquareLossIterations(X.mat, y.vec, 50, 0.1)
 #'    
@@ -43,8 +43,9 @@ LMSquareLossIterations <- function(
     weights_scaled_mat[,iteration] = as.vector(weight_vec)
   }
   w <- weights_scaled_mat[-1,]
-  weights_mat = t(w) %*% S.diagonal.mat
-  b <- t(w) %*% S.diagonal.mat %*% mean.mat
-  return(weights_mat)
+  weights_mat <- t(w) %*% S.diagonal.mat
+  b <- -t(w) %*% S.diagonal.mat %*% mean.mat
+  weights_mat <- cbind(b,weights_mat)
+  return(t(weights_mat))
 } 
 

@@ -36,11 +36,15 @@ LMLogisticLossL2CV <- function(
   }
   #To be returned
   mean.validation.loss.vec <- colMeans(validation.loss.mat)
-  mean.train.loss.vec <- colMeans(train.loss.mat)
+  mean.train.loss.vec1 <- colMeans(train.loss.mat)
   #don't forget to return penalty.vec for plot
   selected.penalty <- which.min(mean.validation.loss.vec)
-  w.vec <- LMLogisticLossL2Penalties(X.mat,y.vec,penalty.vec)
+  w.head <- LMLogisticLossL2Penalties(X.mat,y.vec,penalty.vec)
   index <- which(penalty.vec %in% c(selected.penalty))
   weight_vec <- w.head[,index]
   
+  returnList <- list(mean.validation.loss = mean.validation.loss.vec,
+                     mean.train.loss.vec =   mean.train.loss.vec1, penalty.vec = penalty.vec, 
+                     selected.penalty = selected.penalty, weight.vec = weight_vec,
+                     predict=function(X.test){return(X.test * weight_vec)})
 }

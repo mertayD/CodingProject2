@@ -1,3 +1,22 @@
+#' Title
+#'
+#' @param X.mat 
+#' @param y.vec 
+#' @param fold.vec 
+#' @param max.iterations 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#'    library(codingProject2)
+#'    data(ozone, package = "ElemStatLearn")
+#'    X.mat<-ozone[1:20,-1]
+#'    y.vec<-ozone[1:20, 1]
+#'    max.iterations <- 30
+#'    step.size <- 0.1
+#'    fold.vec <- sample(rep(1:5, l=nrow(X.mat)))
+#'    res <- LMSquareLossIterations(X.mat, y.vec, fold.vec, max.iterations)
 LMSquareLossEarlyStoppingCV <- function(
   X.mat,
   y.vec,
@@ -15,7 +34,7 @@ LMSquareLossEarlyStoppingCV <- function(
     n_rows_validation_set <- nrow(validation_set)
     n_rows_train_set <- nrow(train_set)
     
-    W <- LMSquareLossIterations(train_set,train_labels, step_size, max.iterations)
+    W <- LMSquareLossIterations(train_set,train_labels, max.iterations, step_size )
     for(prediction.set.name in c("train", "validation")){
       if(identical(prediction.set.name, "train")){
         to.be.predicted <- train_set
@@ -24,7 +43,7 @@ LMSquareLossEarlyStoppingCV <- function(
         to.be.predicted <- validation_set
       }
       
-      pred <- to.be.predicted %*% W 
+      pred <- cbind(1,to.be.predicted) %*% W 
       
       if(identical(prediction.set.name, "train")){
         loss.mat <- (sweep(pred,2, as.vector(validation_labels),"-"))^2
@@ -38,6 +57,13 @@ LMSquareLossEarlyStoppingCV <- function(
   }
   mean.validation.loss.vec <- colMeans(validation.loss.mat)
   selected.steps <- which.min(mean.validation.loss.vec)
-  w.head <- LMSquareLossIterations(X.mat,y.vec, selected.steps, max.iterations)
-  weight_vec <- w.head[,selected.steps]
+  w.head <- LMSquareLossIterations(X.mat,y.vec, selected.steps, step_size)
+  weight_vec <- w.head[selected.steps,]
+  
+  returnList <- list(mean.validation.loss = mean.validation.loss.vec,
+                     mean.train.loss.vec =   mean.train.loss.vec, penalty.vec = penalty.vec, 
+                     selected.penalty = selected.penalty, weight.vec = weight_vec,
+                     predict=function(X.test){return(X.test * weight_vec)})
+  return(returnList)
 }
+

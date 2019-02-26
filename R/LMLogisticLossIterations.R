@@ -43,14 +43,15 @@ LMLogisticLossIterations <- function(
     sig <- sigmoid(pred)
     cost <- sig - y.vec
     gradient <- t(X.gd) %*% cost
-    weight_vec <- weight_vec - (step.size/n) * gradient  
+    weight_vec <- weight_vec - (step.size) * gradient  
     weights_scaled_mat[,iteration] = as.vector(weight_vec)
   }
   w <- weights_scaled_mat[-1,]
-  weights_mat = t(w) %*% S.diagonal.mat
-  b <- t(w) %*% S.diagonal.mat %*% mean.mat
-  return(weights_mat)
-} 
+  weights_mat <- t(w) %*% S.diagonal.mat
+  b <- -t(w) %*% S.diagonal.mat %*% mean.mat
+  weights_mat <- cbind(b,weights_mat)
+  return(t(weights_mat))
+  } 
 
 #' Title
 #'

@@ -15,7 +15,7 @@ LMLogisticLossEarlyStoppingCV <- function(
     n_rows_validation_set <- nrow(validation_set)
     n_rows_train_set <- nrow(train_set)
     
-    W <- LMSquareLossIterations(train_set,train_labels, step_size, max.iterations)
+    W <- LMSquareLossIterations(train_set,train_labels, max.iterations, step_size)
     for(prediction.set.name in c("train", "validation")){
       if(identical(prediction.set.name, "train")){
         to.be.predicted <- train_set
@@ -23,7 +23,7 @@ LMLogisticLossEarlyStoppingCV <- function(
       else{
         to.be.predicted <- validation_set
       }
-      pred <- to.be.predicted %*% W 
+      pred <- cbind(1,to.be.predicted) %*% W 
       if(identical(prediction.set.name, "train")){
         loss.mat <-ifelse(pred.mat>0.5, 1, 0) != train_labels
         train.loss.mat[,fold.i] <- colMeans(loss.mat)
@@ -36,6 +36,6 @@ LMLogisticLossEarlyStoppingCV <- function(
   }
     mean.validation.loss.vec <- colMeans(validation.loss.mat)
     selected.steps <- which.min(mean.validation.loss.vec)
-    w.head <- LMSquareLossIterations(X.mat,y.vec, selected.steps, max.iterations)
-    weight_vec <- w.head[,selected.steps]
+    w.head <- LMSquareLossIterations(X.mat,y.vec, selected.steps, step_size)
+    weight_vec <- w.head[selected.steps,]
 }
