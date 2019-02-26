@@ -1,3 +1,21 @@
+#' LMLogisticLossEarlyStoppingCV
+#'
+#' This function uses cross fold validatoion to find the percision of the 
+#' LMLogisticLossIterations function
+#'
+#' @param X.mat numeric input feature matrix [n x p]
+#' @param Y.vec numeric input label vetor [n]
+#' @param fold.vec a vector of fold ids
+#' @param max.iterations scalar integer, max number of iterations
+#'
+#' @return Output a list with the following named elements:
+#' mean.validation.loss, mean.train.loss.vec (for plotting train/validation loss curves)
+#' selected.steps weight.vec, the weight vector found by using gradient descent with selected.steps on the whole training data set.
+#' predict(testX.mat), a function that takes a test features matrix and returns a vector of predictions (real numbers for regression, probabilities for binary classification).
+#' 
+#' @export
+#' @examples
+#' 
 LMLogisticLossEarlyStoppingCV <- function(
   X.mat,
   y.vec,

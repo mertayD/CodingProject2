@@ -1,3 +1,19 @@
+#' LMLogisticLossL2
+#'
+#' find the optimal weight vector that minimizes the following cost function: ∑i=1^n L[w^T x_i, y_i] + penalty * ||w||, 
+#' where L is either the logistic loss.
+#'
+#' @param X.scaled.mat already has mean=0 and sd=1 for each of its columns
+#' @param Y.vec numeric input label vetor [n]
+#' @param penalty a vector of fold ids
+#' @param opt.thresh positive numeric scalar
+#' @param initial.weight.vec vector of weight
+#'
+#' @return optimal weight vector for the given penalty parameter
+#' 
+#' @export
+#' @examples
+#'
 LMLogisticLossL2 <- function(
   X.scaled.mat, 
   y.vec, 

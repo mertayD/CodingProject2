@@ -1,3 +1,15 @@
+#' LMSquareLossL2Penalties
+#'
+#' calculates a matrix of penalties, that gets used as the weight matrix
+#'
+#' @param X.mat numeric input feature matrix [n x p]
+#' @param Y.vec numeric input label vetor [n]
+#' @param penalty.vec vector of decreasing penalty values
+#'
+#' @return W.mat (n_features+1 x n_penalties), weight matrix on original scale, that can be used to get predictions via cbind(1, X.mat) %*% W.mat (the first row of W.mat should be the bias/beta/intercept)
+#' @export
+#'
+#' @examples
 LMLogisticLossL2Penalties <- function(
   X.mat, 
   y.vec, 

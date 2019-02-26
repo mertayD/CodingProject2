@@ -1,11 +1,13 @@
 #' LMLogisticLossIterations
 #'
-#' @param X.mat 
-#' @param y.vec 
-#' @param max.iterations 
+#' calculates the LM Logistic Loss Iterations
+#'
+#' @param X.mat numeric input feature matrix [n x p]
+#' @param Y.vec numeric input label vetor [n]
+#' @param max.iterations scalar integer > 1, max number of iterations
 #' @param step.size 
 #'
-#' @return
+#' @return W.mat matrix of weight vectors, one for each iteration, n_features+1 x max.iterations. (the first element of the weight vector should be the intercept term).
 #' @export
 #'
 #' @examples

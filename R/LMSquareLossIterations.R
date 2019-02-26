@@ -1,22 +1,24 @@
-#' Title
+#' LMSquareLossIterations
+#' 
+#' computes square loss with respect to step size
 #'
-#' @param X.mat 
-#' @param y.vec 
-#' @param max.iterations 
+#' @param X.mat numeric input feature matrix [n x p]
+#' @param Y.vec numeric input label vetor [n]
+#' @param max.iterations scalar integer, max number of iterations
 #' @param step.size 
 #'
-#' @return
+#' @return  W.mat, matrix of weight vectors, one for each iteration, n_features+1 x max.iterations. (the first element of the weight vector should be the intercept term). Should be able to get a matrix of predictions via X.mat %*% W.mat
 #' @export
 #'
 #' @examples
 #'    library(codingProject2)
 #'    data(ozone, package = "ElemStatLearn")
-#'    X.mat<-ozone[1:20,-1]
-#'    y.vec<-ozone[1:20, 1]
-#'    max.iterations <- 30
+#'    X.mat<-ozone[1:10,-1]
+#'    y.vec<-ozone[1:10, 1]
+#'    max.iterations <- 50
 #'    step.size <- 0.1
 #'    res <- LMSquareLossIterations(X.mat, y.vec, 50, 0.1)
-#'    
+#'
 LMSquareLossIterations <- function(
   X.mat, 
   y.vec, 

@@ -1,3 +1,20 @@
+#' LMLogisticLossL2CV
+#'
+#' This function uses cross fold validation to find the percision of the 
+#' LMLogisticLossL2 function
+#'
+#' @param X.mat numeric input feature matrix [n x p]
+#' @param Y.vec numeric input label vetor [n]
+#' @param fold.vec a vector of fold ids
+#' @param penalty.vec vector of penalties
+#'
+#' @return Output a list with the following named elements:
+#' mean.validation.loss, mean.train.loss.vec, penalty.vec, selected.penalty (for plotting train/validation loss curves)
+#' weight.vec, the weight vector found by using gradient descent with selected.penalty on the whole training data set.
+#' predict(testX.mat), a function that takes a test features matrix and returns a vector of predictions (real numbers for regression, probabilities for binary classification).
+#' @export
+#'
+#' @examples
 LMLogisticLossL2CV <- function(
   X.mat, 
   y.vec, 
