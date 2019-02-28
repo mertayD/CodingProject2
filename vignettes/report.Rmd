@@ -1,0 +1,191 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+```{r data}
+data.name.vec <- c(
+  "spam",
+  "SAheart",
+  "zip.train",
+  "prostate",
+  "ozone")
+data.list <- list()
+library(ElemStatLearn)
+for(data.name in data.name.vec)
+{
+  data(list = data.name, package="ElemStatLearn")
+  data.list[[data.name]] <- get(data.name)
+}
+str(data.list)
+is.binary <- ElemStatLearn::zip.train[,1] %in% c(0,1)
+data.list <- list(
+  spam=list(
+    label.vec=ifelse(ElemStatLearn::spam$spam=="spam", 1, 0),
+    feature.mat=as.matrix(ElemStatLearn::spam[, -ncol(ElemStatLearn::spam)])),
+  zip.train=list(
+    label.vec=ElemStatLearn::zip.train[is.binary,1],
+    feature.mat=ElemStatLearn::zip.train[is.binary,-1])
+)
+n.folds <- 5
+resultsList <- list()
+for(data.name in names(data.list))
+{
+  one.data.set <- data.list[[data.name]]
+  set.seed(1)
+  fold.vec <- sample(rep(1:n.folds, l=nrow(one.data.set$feature.mat)))
+    #NearestNeighborsCV(one.data.set$feature.mat,   one.data.set$label.vec)
+  for(test.fold in 1:(n.folds))
+  {
+    ## 
+    ## compute test error of pred vec with respect to one data.set$label[!is.train]
+    
+    # LIST OF LISTS
+    # Add results 
+  }
+}
+```
+
+## Data set 1: spam
+
+### Matrix of loss values
+
+```{r, result = "asis"}
+#print out and/or plot the matrix.
+pander::pandoc.table(resultsList[1]$train.loss.mat)
+```
+
+comment on difference between NN and baseline.
+
+### Train/validation loss plot
+
+```{r}
+#plot the two loss functions.
+ggplot(resultsList[1]$train.loss.vec)
+ggplot(resultsList[1]$validation.loss.vec)
+```
+
+What is the optimal number of neighbors?
+
+```{r}
+#plot the two loss functions.
+resultsList[1]$selected.neighbors
+```
+
+## Data set 2: SAheart
+
+### Matrix of loss values
+
+```{r, result = "asis"}
+#print out and/or plot the matrix.
+pander::pandoc.table(resultsList[2]$train.loss.mat)
+```
+
+comment on difference between NN and baseline.
+
+### Train/validation loss plot
+
+```{r}
+#plot the two loss functions.
+ggplot(resultsList[2]$train.loss.vec)
+ggplot(resultsList[2]$validation.loss.vec)
+```
+
+What is the optimal number of neighbors?
+
+```{r}
+#plot the two loss functions.
+resultsList[2]$selected.neighbors
+```
+
+## Data set 3: zip.train
+
+### Matrix of loss values
+
+```{r, result = "asis"}
+#print out and/or plot the matrix.
+pander::pandoc.table(resultsList[3]$train.loss.mat)
+```
+
+comment on difference between NN and baseline.
+
+### Train/validation loss plot
+
+```{r}
+#plot the two loss functions.
+ggplot(resultsList[3]$train.loss.vec)
+ggplot(resultsList[3]$validation.loss.vec)
+```
+
+What is the optimal number of neighbors?
+
+```{r}
+#plot the two loss functions.
+resultsList[3]$selected.neighbors
+```
+
+## Data set 4: prostate 
+
+### Matrix of loss values
+
+```{r, result = "asis"}
+#print out and/or plot the matrix.
+pander::pandoc.table(resultsList[4]$train.loss.mat)
+```
+
+comment on difference between NN and baseline.
+
+### Train/validation loss plot
+
+```{r}
+#plot the two loss functions.
+ggplot(resultsList[4]$train.loss.vec)
+ggplot(resultsList[4]$validation.loss.vec)
+```
+
+What is the optimal number of neighbors?
+
+```{r}
+#plot the two loss functions.
+resultsList[4]$selected.neighbors
+```
+
+## Data set 5: ozone 
+
+### Matrix of loss values
+
+```{r, result = "asis"}
+#print out and/or plot the matrix.
+pander::pandoc.table(resultsList[5]$train.loss.mat)
+```
+
+comment on difference between NN and baseline.
+
+### Train/validation loss plot
+
+```{r}
+#plot the two loss functions.
+ggplot(resultsList[5]$train.loss.vec)
+ggplot(resultsList[5]$validation.loss.vec)
+```
+
+What is the optimal number of neighbors?
+
+```{r}
+#plot the two loss functions.
+resultsList[5]$selected.neighbors
+```
