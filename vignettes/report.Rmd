@@ -46,10 +46,9 @@ data.list <- list(
     label.vec=ElemStatLearn::zip.train[is.binary,1],
     feature.mat=ElemStatLearn::zip.train[is.binary,-1]),
   prostate=list(
-    label.vec=ifelse(ElemStatLearn::prostate$lpsa =="lpsa", 1, 0),
-    feature.mat=as.matrix(ElemStatLearn::prostate[, 1:ncol(ElemStatLearn::prostate)-3])),
+    label.vec=ElemStatLearn::prostate$lpsa,
+    feature.mat=as.matrix(ElemStatLearn::prostate[, 1:(ncol(ElemStatLearn::prostate)-2)])),
   ozone=list(
-    # label.vec=ifelse(ElemStatLearn::ozone$ozone=="ozone", 1, 0),
     label.vec=ElemStatLearn::ozone$ozone,
     feature.mat=as.matrix(ElemStatLearn::ozone[, 2:ncol(ElemStatLearn::ozone)]))
 )
@@ -73,7 +72,7 @@ for(data.name in names(data.list))
   # variables for function
   X.mat <- one.data.set$feature.mat
   y.vec <- one.data.set$label.vec
-  fold.vec <- sample(rep(1:n.folds, l=nrow(one.data.set$feature.mat)))
+  fold.vec <- sample(rep(1:n.folds, l=nrow(X.mat)))
   max.iterations <- 30
  
   if(data.name == "spam")
