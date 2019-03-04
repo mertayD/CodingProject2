@@ -23,7 +23,11 @@ LMLogisticLossEarlyStoppingCV <- function(
   max.iterations
 ){
   step_size <- 0.1
-  for(fold.i in fold.vec)
+  #in 1:5 because nfolds is given as 5 just for trial need to look for ways how to find distinct elements in fold.vec
+  #need to ask how to find number of fold from fol.vec so that we can replace 1:5 with 1:n.folds
+  train.loss.mat <- matrix(,max.iterations,5)
+  validation.loss.mat <- matrix(,max.iterations,5)
+  for(fold.i in 1:5)
   {
     validation_indices <- which(fold.vec %in% c(fold.i))
     validation_set <- X.mat[validation_indices,]
@@ -41,7 +45,7 @@ LMLogisticLossEarlyStoppingCV <- function(
       else{
         to.be.predicted <- validation_set
       }
-      pred <- cbind(1,to.be.predicted) %*% W 
+      pred <- as.matrix(cbind(1,to.be.predicted)) %*% as.matrix(W) 
       if(identical(prediction.set.name, "train")){
         loss.mat <-ifelse(pred.mat>0.5, 1, 0) != train_labels
         train.loss.mat[,fold.i] <- colMeans(loss.mat)
@@ -52,8 +56,15 @@ LMLogisticLossEarlyStoppingCV <- function(
       }
     }
   }
-    mean.validation.loss.vec <- colMeans(validation.loss.mat)
-    selected.steps <- which.min(mean.validation.loss.vec)
-    w.head <- LMSquareLossIterations(X.mat,y.vec, selected.steps, step_size)
-    weight_vec <- w.head[selected.steps,]
+  mean.validation.loss.vec <- rowMeans(validation.loss.mat)
+  mean.train.loss.vec <- rowMeans(train.loss.mat)
+  selected.steps <- which.min(mean.validation.loss.vec)
+  w.head <- LMLogisticLossIterations(X.mat,y.vec, selected.steps, step_size)
+  weight_vec <- w.head[,selected.steps]
+  
+  returnList <- list(mean.validation.loss = mean.validation.loss.vec,
+                     mean.train.loss.vec =   mean.train.loss.vec,
+                     selected.steps = selected.steps, weight.vec = weight_vec,
+                     predict=function(X.test){return(as.matrix(X.test) %*% weight_vec)})
+  return(returnList)
 }
