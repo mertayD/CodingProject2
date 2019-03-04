@@ -1,28 +1,22 @@
-#' LMSquareLossEarlyStoppingCV
+#' Title
 #'
-#' This function uses cross fold validatoion to find the percision of the 
-#' LMSquareLossIterations function
+#' @param X.mat 
+#' @param y.vec 
+#' @param fold.vec 
+#' @param max.iterations 
 #'
-#' @param X.mat numeric input feature matrix [n x p]
-#' @param Y.vec numeric input label vetor [n]
-#' @param fold.vec a vector of fold ids
-#' @param max.iterations scalar integer, max number of iterations
-#'
-#' @return Output a list with the following named elements:
-#' mean.validation.loss, mean.train.loss.vec (for plotting train/validation loss curves)
-#' selected.steps weight.vec, the weight vector found by using gradient descent with selected.steps on the whole training data set.
-#' predict(testX.mat), a function that takes a test features matrix and returns a vector of predictions (real numbers for regression, probabilities for binary classification).
-#' 
+#' @return
 #' @export
+#'
 #' @examples
 #'    library(codingProject2)
 #'    data(ozone, package = "ElemStatLearn")
 #'    X.mat<-ozone[1:20,-1]
 #'    y.vec<-ozone[1:20, 1]
-#'    max.iterations <- 30
+#'    max.iterations <- 100
 #'    step.size <- 0.1
 #'    fold.vec <- sample(rep(1:5, l=nrow(X.mat)))
-#'    res <- LMSquareLossIterations(X.mat, y.vec, fold.vec, max.iterations)
+#'    res <- LMSquareLossEarlyStoppingCV(X.mat, y.vec, fold.vec, max.iterations)
 LMSquareLossEarlyStoppingCV <- function(
   X.mat,
   y.vec,
@@ -30,7 +24,11 @@ LMSquareLossEarlyStoppingCV <- function(
   max.iterations
 ){
   step_size <- 0.1
-  for(fold.i in fold.vec)
+  
+  #in 1:5 because nfolds is given as 5 just for trial need to look for ways how to find distinct elements in fold.vec
+  train.loss.mat <- matrix(,max.iterations,5)
+  validation.loss.mat <- matrix(,max.iterations,5)
+  for(fold.i in 1:5)
   {
     validation_indices <- which(fold.vec %in% c(fold.i))
     validation_set <- X.mat[validation_indices,]
@@ -41,6 +39,7 @@ LMSquareLossEarlyStoppingCV <- function(
     n_rows_train_set <- nrow(train_set)
     
     W <- LMSquareLossIterations(train_set,train_labels, max.iterations, step_size )
+    
     for(prediction.set.name in c("train", "validation")){
       if(identical(prediction.set.name, "train")){
         to.be.predicted <- train_set
@@ -49,26 +48,27 @@ LMSquareLossEarlyStoppingCV <- function(
         to.be.predicted <- validation_set
       }
       
-      pred <- cbind(1,to.be.predicted) %*% W 
+      pred <- as.matrix(cbind(1,to.be.predicted)) %*% W 
       
       if(identical(prediction.set.name, "train")){
-        loss.mat <- (sweep(pred,2, as.vector(validation_labels),"-"))^2
+        loss.mat <-(pred - as.vector(train_labels))^2
         train.loss.mat[,fold.i] <- colMeans(loss.mat)
       }
       else{
-        loss.mat <- (sweep(pred,2, as.vector(train_labels),"-"))^2
+        loss.mat <- (pred - as.vector(validation_labels))^2
         validation.loss.mat[,fold.i] <- colMeans(loss.mat)
       }
     }
   }
-  mean.validation.loss.vec <- colMeans(validation.loss.mat)
+  mean.validation.loss.vec <- rowMeans(validation.loss.mat)
+  mean.train.loss.vec <- rowMeans(train.loss.mat)
   selected.steps <- which.min(mean.validation.loss.vec)
   w.head <- LMSquareLossIterations(X.mat,y.vec, selected.steps, step_size)
-  weight_vec <- w.head[selected.steps,]
+  weight_vec <- w.head[,selected.steps]
   
   returnList <- list(mean.validation.loss = mean.validation.loss.vec,
-                     mean.train.loss.vec =   mean.train.loss.vec, penalty.vec = penalty.vec, 
-                     selected.penalty = selected.penalty, weight.vec = weight_vec,
+                     mean.train.loss.vec =   mean.train.loss.vec,
+                     selected.steps = selected.steps, weight.vec = weight_vec,
                      predict=function(X.test){return(X.test * weight_vec)})
   return(returnList)
 }
