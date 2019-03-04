@@ -32,7 +32,7 @@ LMSquareLossIterations <- function(
   squared.means = colMeans(squared_zero_mean)
   S.vec <- sqrt((squared.means))
   S.diagonal.mat <- diag(S.vec^-1, nrow = ncol(X.mat), ncol = ncol(X.mat))
-  X.scaled <- sweep(zero_mean,2,S.vec,"/")
+  X.scaled <- S.diagonal.mat %*% as.matrix(zero_mean)
   weights_scaled_mat <- matrix(0, ncol(X.scaled) ,max.iterations)
   weight_vec <- seq(0,0, length.out = ncol(X.scaled))
   weights_scaled_mat[,1] = as.vector(weight_vec)
