@@ -14,7 +14,6 @@
 #'    X.mat<-ozone[1:20,-1]
 #'    y.vec<-ozone[1:20, 1]
 #'    max.iterations <- 100
-#'    step.size <- 0.1
 #'    fold.vec <- sample(rep(1:5, l=nrow(X.mat)))
 #'    res <- LMSquareLossEarlyStoppingCV(X.mat, y.vec, fold.vec, max.iterations)
 LMSquareLossEarlyStoppingCV <- function(

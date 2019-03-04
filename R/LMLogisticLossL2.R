@@ -30,15 +30,16 @@ LMLogisticLossL2 <- function(
     sig <- sigmoid(pred)
     cost <- sig - y.vec
     gradient <- t(X.gd) %*% cost
+    weight_vec <- weight_vec - (step.size) * ((gradient/n) + 2*penalty*weight_vec) 
+    weights_scaled_mat[,iteration] = as.vector(weight_vec)
     if(gradient > opt.thresh )
     {
-      weight_vec <- weight_vec - (step.size) * ((gradient/n) + 2*penalty) 
-      weights_scaled_mat[,iteration] = as.vector(weight_vec)
+      index<- i
     }
-    index<- i
+    
   }
   
-  return(weights_scaled_mat[,index])
+  return(weights_scaled_mat[,index + 1])
 } 
 
 sigmoid <- function(z)
