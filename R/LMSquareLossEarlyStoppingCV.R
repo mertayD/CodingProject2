@@ -27,7 +27,8 @@ LMSquareLossEarlyStoppingCV <- function(
   #in 1:5 because nfolds is given as 5 just for trial need to look for ways how to find distinct elements in fold.vec
   train.loss.mat <- matrix(,max.iterations,5)
   validation.loss.mat <- matrix(,max.iterations,5)
-  for(fold.i in 1:5)
+  n.folds <- max(fold.vec)
+  for(fold.i in 1:n.folds)
   {
     validation_indices <- which(fold.vec %in% c(fold.i))
     validation_set <- X.mat[validation_indices,]

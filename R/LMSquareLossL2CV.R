@@ -22,7 +22,8 @@ LMSquareLossL2CV <- function(
   fold.vec, 
   penalty.vec
   ){
-  for (fold.i in fold.vec){
+  n.folds <- max(fold.vec)
+  for (fold.i in n.folds){
     validation_indices <- which(fold.vec %in% c(fold.i))
     validation_set <- X.mat[validation_indices,]
     train_set <- X.mat[-validation_indices,]

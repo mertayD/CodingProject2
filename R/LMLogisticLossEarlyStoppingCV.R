@@ -27,7 +27,8 @@ LMLogisticLossEarlyStoppingCV <- function(
   #need to ask how to find number of fold from fol.vec so that we can replace 1:5 with 1:n.folds
   train.loss.mat <- matrix(,max.iterations,5)
   validation.loss.mat <- matrix(,max.iterations,5)
-  for(fold.i in 1:5)
+  n.folds <- max(fold.vec)
+  for(fold.i in 1:n.folds)
   {
     validation_indices <- which(fold.vec %in% c(fold.i))
     validation_set <- X.mat[validation_indices,]
