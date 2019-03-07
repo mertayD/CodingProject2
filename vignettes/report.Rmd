@@ -109,8 +109,8 @@ for(data.name in names(data.list))
     #For each train/test split, to show that your algorithm is actually learning something non-trivial from the inputs/features, compute a baseline predictor that ignores the inputs/features.
     # Binary classification: the most frequent class/label/output in the training data.
     
-    prdictionBase <- getmode(fold.vec)
-    baseline.append(getmode(fold.vec))
+    prdictionBase <- mfv(fold.vec)
+    baseline.append(mfv(fold.vec))
     
     resultES <- LMLogisticLossEarlyStoppingCV(X.mat,
                                             y.vec,

@@ -23,6 +23,7 @@ LMLogisticLossL2 <- function(
 ){
   weight_vec <- initial.weight.vec
   index <- 0 
+  max.iterations <- 100
   for(i in 1:max.iterations)
   {
     

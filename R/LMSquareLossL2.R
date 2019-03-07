@@ -20,9 +20,9 @@ LMSquareLossL2 <- function(
   opt.thresh,
   initial.weight.vec
 ){
-  #How to decide max.iterations?
   weight_vec <- initial.weight.vec
   index <- 0
+  max.iterations <- 100
   for(i in 1:max.iterations)
   {
     gradient <- t(X.mat) %*% (as.matrix(X.mat) %*% weight_vec - y.vec) 
@@ -31,7 +31,6 @@ LMSquareLossL2 <- function(
     if(gradient > opt.thresh ){
       index <- i
     }
-   
   }
   
   return(weights_scaled_mat[,index + 1])
