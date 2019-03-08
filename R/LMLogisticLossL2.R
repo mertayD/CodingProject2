@@ -5,7 +5,7 @@
 #'
 #' @param X.scaled.mat already has mean=0 and sd=1 for each of its columns
 #' @param Y.vec numeric input label vetor [n]
-#' @param penalty a vector of fold ids
+#' @param penalty non-negative numeric scalar
 #' @param opt.thresh positive numeric scalar
 #' @param initial.weight.vec vector of weight
 #'
@@ -13,7 +13,16 @@
 #' 
 #' @export
 #' @examples
-#'
+#'    library(codingProject2)
+#'    data(spam, package = "ElemStatLearn")
+#'    X.mat<-spam[1:100,-58]
+#'    X.scaled.mat<-scale(X.mat, center = TRUE, scale = TRUE)
+#'    y.vec<-spam[1:100, 58]
+#'    penalty <- 2
+#'    opt.thresh <- 0.0001
+#'    initial.weight.vec <- rep(0,ncol(X.scaled.mat))
+#'    
+#'    optimalWeightVector <- LMLogisticLossIterations(X.scaled.mat, y.vec, penalty, opt.thresh, initial.weight.vec)
 LMLogisticLossL2 <- function(
   X.scaled.mat, 
   y.vec, 

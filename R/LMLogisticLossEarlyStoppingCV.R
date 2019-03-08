@@ -14,8 +14,17 @@
 #' predict(testX.mat), a function that takes a test features matrix and returns a vector of predictions (real numbers for regression, probabilities for binary classification).
 #' 
 #' @export
-#' @examples
 #' 
+#' @examples
+#'    library(codingProject2)
+#'
+#'    data(SAheart , package = "ElemStatLearn")
+#'    X.mat<-SAheart [1:50,-9]
+#'    y.vec<-SAheart [1:50, 9]
+#'    max.iterations <- 100
+#'    fold.vec <- sample(rep(1:5, l=nrow(X.mat)))
+#'    
+#'    result <- LMLogisticLossEarlyStoppingCV(X.mat, y.vec, fold.vec, max.iterations)
 LMLogisticLossEarlyStoppingCV <- function(
   X.mat,
   y.vec,

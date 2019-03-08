@@ -1,4 +1,4 @@
-#' Title
+  #' LMSquareLossEarlyStoppingCV
 #'
 #' @param X.mat 
 #' @param y.vec 
