@@ -49,10 +49,10 @@ data.list <- list(
     feature.mat=ElemStatLearn::zip.train[is.binary,-1]),
   prostate=list(
     label.vec=ElemStatLearn::prostate$lpsa,
-    feature.mat=as.matrix(ElemStatLearn::prostate[, 1:(ncol(ElemStatLearn::prostate)-2)])),
+    feature.mat=as.matrix(ElemStatLearn::prostate[, -c(9,10)])),
   ozone=list(
     label.vec=ElemStatLearn::ozone$ozone,
-    feature.mat=as.matrix(ElemStatLearn::ozone[, 2:ncol(ElemStatLearn::ozone)]))
+    feature.mat=as.matrix(ElemStatLearn::ozone[, -ncol(ElemStatLearn::ozone)]))
 )
 
 n.folds <- 4
@@ -86,8 +86,13 @@ for(data.name in names(data.list))
   {
     is.test <- fold.vec == test.fold
     is.train <- !is.test
-    X.train <- one.data.set$features[is.train,]
-    y.train <- one.data.set$labels[is.train]
+    X.train <- X.mat[is.train,]
+    y.train <- y.vec[is.train]
+    
+    print(test.fold)
+    # print(y.train)
+    # print(fold.vec)
+    
     if(data.name == "prostate" || data.name == "ozone")
     {  
        #For each train/test split, to show that your algorithm is actually learning something     non-trivial from          the inputs/features, compute a baseline predictor that ignores the inputs/features.
@@ -98,14 +103,14 @@ for(data.name in names(data.list))
        # print(data.name)
        # print(data.list[[data.name]])
     
-       resultES <- LMSquareLossEarlyStoppingCV(X.train,
-                                              y.train,
-                                              fold.vec,
-                                              max.iterations)
-       resultREG <- LMSquareLossIterations(X.train,
-                                       y.train,
-                                       fold.vec,
-                                       max.iterations)
+       resultES <- codingProject2::LMSquareLossEarlyStoppingCV(X.train,
+                                               y.train,
+                                               fold.vec,
+                                               max.iterations)
+       resultREG <- codingProject2::LMSquareLossIterations(X.train,
+                                           y.train,
+                                           fold.vec,
+                                           max.iterations)
        
        str(resultES)
        str(resultREG)
@@ -116,14 +121,14 @@ for(data.name in names(data.list))
          ##knn=fit$predict(data.set$features[is.test,]),
          baseline=rep(baseline, sum(is.test)))
        
-       str(pred.prob.list)
-       test.fold.result.list <- list()
-       for(algo in names(pred.prob.list))
-       {
-         pred.prob.vec <- pred.prob.list[[algo]]
-         pred.class.vec <- ifelse(pred.prob.vec > 0.5, 1, 0)
-         test.fold.result.list[[algo]] <- mean(data.set$labels[is.test] != pred.class.vec)
-       }
+ #      str(pred.prob.list)
+  #     test.fold.result.list <- list()
+   #    for(algo in names(pred.prob.list))
+    #   {
+     #    pred.prob.vec <- pred.prob.list[[algo]]
+      #   pred.class.vec <- ifelse(pred.prob.vec > 0.5, 1, 0)
+       #  test.fold.result.list[[algo]] <- mean(data.set$labels[is.test] != #pred.class.vec)
+ #      }
     }
   }
   
