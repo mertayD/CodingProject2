@@ -20,6 +20,11 @@ LMLogisticLossL2Penalties <- function(
   y.vec, 
   penalty.vec 
 ){
+  if(nrow(X.mat) <= 0 || ncol(X.mat) <= 0 || nrow(y.vec) <= 0 || ncol(y.vec) <= 0)  
+  {
+    error("Feature matrix or Label vec has unexpected dimensions")
+  }
+  
   mean.mat <- matrix(rep(colMeans(X.mat)),nrow = ncol(X.mat), ncol = 1)
   zero_mean <- sweep(X.mat,2, as.vector(mean.mat),"-")
   squared_zero_mean <- (zero_mean)^2

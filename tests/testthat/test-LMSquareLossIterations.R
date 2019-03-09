@@ -28,5 +28,5 @@ test_that("LMSquareLossIterations throws errors", {
   step.size <- 0.1
   k <- sigmoid(0)
   
-  expect_error(LMSquareLossIterations(X.mat, y.vec, 50, 0.1), "Add error")
+  expect_error(LMSquareLossIterations(X.mat, y.vec, 50, 0.1), "Feature matrix or Label vec has unexpected dimensions")
 })

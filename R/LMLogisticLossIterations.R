@@ -25,6 +25,12 @@ LMLogisticLossIterations <- function(
   max.iterations,
   step.size
 ){
+  
+  if(nrow(X.mat) <= 0 || ncol(X.mat) <= 0 || nrow(y.vec) <= 0 || ncol(y.vec) <= 0)  
+  {
+    error("Feature matrix or Label vec has unexpected dimensions")
+  }
+  
   zero_variance_indices <- vector()
   
   #Scaling of the Input Matrix

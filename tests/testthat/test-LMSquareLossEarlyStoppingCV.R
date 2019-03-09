@@ -28,6 +28,6 @@ test_that("LMSquareLossEarlyStoppingCV throws errors", {
   max.iterations <- 100
   fold.vec <- sample(rep(1:4, l=nrow(X.mat)))
   
-  expect_error(LMSquareLossEarlyStoppingCV(X.mat, y.vec, fold.vec, max.iterations), "Add error")
+  expect_error(LMSquareLossEarlyStoppingCV(X.mat, y.vec, fold.vec, max.iterations), "Feature matrix or Label vec has unexpected dimensions")
   
 })

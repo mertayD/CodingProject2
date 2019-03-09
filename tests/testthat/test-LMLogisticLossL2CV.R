@@ -28,6 +28,6 @@ test_that("LMLogisticLossL2CV throws errors", {
   max.iterations <- 100
   fold.vec <- sample(rep(1:5, l=nrow(X.mat)))
   
-  expect_error(LMLogisticLossL2CV(X.mat, y.vec, fold.vec, max.iterations), "Add error")
+  expect_error(LMLogisticLossL2CV(X.mat, y.vec, fold.vec, max.iterations), "Feature matrix or Label vec has unexpected dimensions")
   
 })

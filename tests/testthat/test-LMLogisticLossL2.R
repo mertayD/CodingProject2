@@ -31,5 +31,5 @@ test_that("LMLogisticLossL2 throws errors", {
   opt.thresh <- 0.0001
   initial.weight.vec <- rep(0,ncol(X.scaled.mat))
   
-  expect_error(optimalWeightVector <- LMLogisticLossL2(X.scaled.mat, y.vec, penalty, opt.thresh, initial.weight.vec), "Add error")
+  expect_error(optimalWeightVector <- LMLogisticLossL2(X.scaled.mat, y.vec, penalty, opt.thresh, initial.weight.vec), "Feature matrix or Label vec has unexpected dimensions")
 })
