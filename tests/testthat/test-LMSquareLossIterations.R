@@ -2,7 +2,7 @@
 # (1) for valid inputs your function returns an output of the expected type/dimension
 # (2) for an invalid input, your function stops with an informative error message.
 
-library(nearestNeighborsDemo)
+library(codingProject2)
 library(testthat)
 context("test-LMSquareLossIterations")
 
@@ -16,7 +16,7 @@ test_that("LMSquareLossIterations computes the right demensions", {
   res <- LMSquareLossIterations(X.mat, y.vec, 50, 0.1)
   
   # n_features+1 x max.iterations
-  expect_equal(nrow(res), 1)
+  expect_equal(nrow(res), 2)
   expect_equal(ncol(res), max.iterations)
 })
 

@@ -112,17 +112,17 @@ for(data.name in names(data.list))
                                                y.train,
                                                fold.vec.train,
                                                max.iterations)
-       resultREG <- codingProject2::LMSquareLossL2CV(X.train,
-                                           y.train,
-                                           fold.vec.train,
-                                           penalty.vec)
+       #resultREG <- codingProject2::LMSquareLossL2CV(X.train,
+       #                                              y.train,
+       #                                              fold.vec.train,
+       #                                              penalty.vec)
        
        str(resultES)
-       str(resultREG)
+       #str(resultREG)
     
        pred.prob.list[test.fold] <- list(
          earlyStopping=resultES$predict(one.data.set$feature.mat[is.test,]),
-         L2regularized=resultREG$predict(one.data.set$feature.mat[is.test,]),
+         #L2regularized=resultREG$predict(one.data.set$feature.mat[is.test,]),
          baseline=rep(baseline, sum(is.test)))
        
        print(pred.prob.list[[test.fold]])

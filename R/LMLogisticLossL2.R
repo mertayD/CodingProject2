@@ -22,7 +22,7 @@
 #'    opt.thresh <- 0.0001
 #'    initial.weight.vec <- rep(0,ncol(X.scaled.mat))
 #'    
-#'    optimalWeightVector <- LMLogisticLossIterations(X.scaled.mat, y.vec, penalty, opt.thresh, initial.weight.vec)
+#'    optimalWeightVector <- LMLogisticLossL2(X.scaled.mat, y.vec, penalty, opt.thresh, initial.weight.vec)
 LMLogisticLossL2 <- function(
   X.scaled.mat, 
   y.vec, 
