@@ -15,6 +15,12 @@
 #' @export
 #'
 #' @examples
+#'   data(SAheart , package = "ElemStatLearn")
+#'   X.mat<-SAheart [1:50,-9]
+#'   y.vec<-SAheart [1:50, 9]
+#'   max.iterations <- 100
+#'   fold.vec <- sample(rep(1:5, l=nrow(X.mat)))
+#'   result <- LMLogisticLossL2CV(X.mat, y.vec, fold.vec, max.iterations)
 LMLogisticLossL2CV <- function(
   X.mat, 
   y.vec, 
