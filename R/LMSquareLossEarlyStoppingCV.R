@@ -26,13 +26,9 @@ LMSquareLossEarlyStoppingCV <- function(
   max.iterations
 ){
   
-  if(nrow(X.mat) <= 0 || ncol(X.mat) <= 0)  
+  if(nrow(X.mat) <= 0 || ncol(X.mat) <= 0 || nrow(y.vec) <= 0 || ncol(y.vec) <= 0)  
   {
-    error("Feature matrix has unexpected dimensions")
-  }
-  else if(nrow(y.vec) <= 0 || ncol(y.vec) <= 0)
-  {
-    error("Label vec has unexpected dimensions")
+    error("Feature matrix or Label vec has unexpected dimensions")
   }
   
   step_size <- 0.1
