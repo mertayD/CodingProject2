@@ -28,6 +28,14 @@ LMSquareLossL2CV <- function(
   fold.vec, 
   penalty.vec
   ){
+  if(nrow(X.mat) <= 0 || ncol(X.mat) <= 0)  
+  {
+    error("Feature matrix has unexpected dimensions")
+  }
+  else if(nrow(y.vec) <= 0 || ncol(y.vec) <= 0)
+  {
+    error("Label vec has unexpected dimensions")
+  }
   n.folds <- max(fold.vec)
   for (fold.i in n.folds){
     validation_indices <- which(fold.vec %in% c(fold.i))
@@ -50,11 +58,11 @@ LMSquareLossL2CV <- function(
       pred <- to.be.predicted %*% W 
       
       if(identical(prediction.set.name, "train")){
-        loss.mat <- (sweep(pred,2, as.vector(validation_labels),"-"))^2
+        loss.mat <- (sweep(pred,2, as.vector(train_labels),"-"))^2
         train.loss.mat[,fold.i] <- colMeans(loss.mat)
       }
       else{
-        loss.mat <- (sweep(pred,2, as.vector(train_labels),"-"))^2
+        loss.mat <- (sweep(pred,2, as.vector(validation_labels),"-"))^2
         validation.loss.mat[,fold.i] <- colMeans(loss.mat)
       }
     }

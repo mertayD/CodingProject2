@@ -25,6 +25,16 @@ LMSquareLossEarlyStoppingCV <- function(
   fold.vec,
   max.iterations
 ){
+  
+  if(nrow(X.mat) <= 0 || ncol(X.mat) <= 0)  
+  {
+    error("Feature matrix has unexpected dimensions")
+  }
+  else if(nrow(y.vec) <= 0 || ncol(y.vec) <= 0)
+  {
+    error("Label vec has unexpected dimensions")
+  }
+  
   step_size <- 0.1
   
   #in 1:5 because nfolds is given as 5 just for trial need to look for ways how to find distinct elements in fold.vec
