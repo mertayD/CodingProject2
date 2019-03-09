@@ -1,6 +1,6 @@
 #' LMSquareLossEarlyStoppingCV
 #'
-#' This function uses cross fold validatoion to find the percision of the 
+#' This function uses cross fold validation to find the percision of the 
 #' LMSquareLossIterations function
 #'
 #' @param X.mat numeric input feature matrix [n x p]
@@ -14,6 +14,7 @@
 #' predict(testX.mat), a function that takes a test features matrix and returns a vector of predictions (real numbers for regression, probabilities for binary classification).
 #' 
 #' @export
+#' 
 #' @examples
 #'    library(codingProject2)
 #'    data(ozone, package = "ElemStatLearn")
@@ -22,7 +23,7 @@
 #'    max.iterations <- 30
 #'    step.size <- 0.1
 #'    fold.vec <- sample(rep(1:5, l=nrow(X.mat)))
-#'    res <- LMSquareLossIterations(X.mat, y.vec, fold.vec, max.iterations)
+#'    res <- LMSquareLossEarlyStoppingCV(X.mat, y.vec, fold.vec, max.iterations)
 LMSquareLossEarlyStoppingCV <- function(
   X.mat,
   y.vec,
@@ -40,7 +41,10 @@ LMSquareLossEarlyStoppingCV <- function(
     n_rows_validation_set <- nrow(validation_set)
     n_rows_train_set <- nrow(train_set)
     
-    W <- LMSquareLossIterations(train_set,train_labels, max.iterations, step_size )
+    print(train_set)
+    print(train_labels)
+    
+    W <- LMSquareLossIterations(train_set, train_labels, max.iterations, step_size )
     for(prediction.set.name in c("train", "validation")){
       if(identical(prediction.set.name, "train")){
         to.be.predicted <- train_set
@@ -49,7 +53,7 @@ LMSquareLossEarlyStoppingCV <- function(
         to.be.predicted <- validation_set
       }
       
-      pred <- cbind(1,to.be.predicted) %*% W 
+      pred <- as.matrix(cbind(1, to.be.predicted)) %*% as.matrix(W)
       
       if(identical(prediction.set.name, "train")){
         loss.mat <- (sweep(pred,2, as.vector(validation_labels),"-"))^2

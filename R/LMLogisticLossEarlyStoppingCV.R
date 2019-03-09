@@ -14,6 +14,7 @@
 #' predict(testX.mat), a function that takes a test features matrix and returns a vector of predictions (real numbers for regression, probabilities for binary classification).
 #' 
 #' @export
+#' 
 #' @examples
 #' 
 LMLogisticLossEarlyStoppingCV <- function(
