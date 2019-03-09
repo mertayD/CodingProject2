@@ -10,6 +10,12 @@
 #' @export
 #'
 #' @examples
+#'    library(codingProject2)
+#'    data(ozone, package = "ElemStatLearn")
+#'    X.mat<-ozone[1:10,-1]
+#'    y.vec<-ozone[1:10, 1]
+#'    penalty.vec <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5)
+#'    res <- LMSquareLossL2Penalties(X.mat, y.vec, penalty.vec)
 
 LMSquareLossL2Penalties <- function(
   X.mat, 

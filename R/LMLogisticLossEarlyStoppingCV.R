@@ -34,8 +34,8 @@ LMLogisticLossEarlyStoppingCV <- function(
   step_size <- 0.1
   #in 1:5 because nfolds is given as 5 just for trial need to look for ways how to find distinct elements in fold.vec
   #need to ask how to find number of fold from fol.vec so that we can replace 1:5 with 1:n.folds
-  train.loss.mat <- matrix(,max.iterations,5)
-  validation.loss.mat <- matrix(,max.iterations,5)
+  train.loss.mat <- matrix(,max.iterations,4)
+  validation.loss.mat <- matrix(,max.iterations,4)
   n.folds <- max(fold.vec)
   for(fold.i in 1:n.folds)
   {

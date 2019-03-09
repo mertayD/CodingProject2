@@ -1,11 +1,14 @@
-  #' LMSquareLossEarlyStoppingCV
+#' LMSquareLossEarlyStoppingCV
 #'
 #' @param X.mat 
 #' @param y.vec 
 #' @param fold.vec 
 #' @param max.iterations 
 #'
-#' @return
+#' @return Output a list with the following named elements:
+#' mean.validation.loss, mean.train.loss.vec (for plotting train/validation loss curves)
+#' selected.steps weight.vec, the weight vector found by using gradient descent with selected.steps on the whole training data set.
+#' predict(testX.mat), a function that takes a test features matrix and returns a vector of predictions (real numbers for regression, probabilities for binary classification).
 #' @export
 #'
 #' @examples
@@ -14,7 +17,7 @@
 #'    X.mat<-ozone[1:20,-1]
 #'    y.vec<-ozone[1:20, 1]
 #'    max.iterations <- 100
-#'    fold.vec <- sample(rep(1:5, l=nrow(X.mat)))
+#'    fold.vec <- sample(rep(1:4, l=nrow(X.mat)))
 #'    res <- LMSquareLossEarlyStoppingCV(X.mat, y.vec, fold.vec, max.iterations)
 LMSquareLossEarlyStoppingCV <- function(
   X.mat,
@@ -25,8 +28,8 @@ LMSquareLossEarlyStoppingCV <- function(
   step_size <- 0.1
   
   #in 1:5 because nfolds is given as 5 just for trial need to look for ways how to find distinct elements in fold.vec
-  train.loss.mat <- matrix(,max.iterations,5)
-  validation.loss.mat <- matrix(,max.iterations,5)
+  train.loss.mat <- matrix(,max.iterations,4)
+  validation.loss.mat <- matrix(,max.iterations,4)
   n.folds <- max(fold.vec)
   for(fold.i in 1:n.folds)
   {

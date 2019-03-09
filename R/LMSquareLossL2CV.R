@@ -15,7 +15,13 @@
 #' @export
 #'
 #' @examples
-
+#'    library(codingProject2)
+#'    data(ozone, package = "ElemStatLearn")
+#'    X.mat<-ozone[1:20,-1]
+#'    y.vec<-ozone[1:20, 1]
+#'    penalty.vec <- c(0.05, 0.1, 0.2, 0.3, 0.4, 0.5)
+#'    fold.vec <- sample(rep(1:4, l=nrow(X.mat)))
+#'    res <- LMSquareLossL2CV(X.mat, y.vec, fold.vec, penalty.vec)
 LMSquareLossL2CV <- function(
   X.mat, 
   y.vec, 
