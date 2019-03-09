@@ -20,6 +20,11 @@ LMSquareLossL2 <- function(
   opt.thresh,
   initial.weight.vec
 ){
+  if(nrow(X.scaled.mat) <= 0 || ncol(X.scaled.mat) <= 0 || nrow(y.vec) <= 0 || ncol(y.vec) <= 0)  
+  {
+    error("Feature matrix or Label vec has unexpected dimensions")
+  }
+  
   weight_vec <- initial.weight.vec
   index <- 0
   max.iterations <- 100
