@@ -47,6 +47,7 @@ LMLogisticLossIterations <- function(
   S.vec <- sqrt((squared.means))
   S.diagonal.mat <- diag(S.vec^-1, nrow = ncol(X.mat), ncol = ncol(X.mat))
   X.scaled <- sweep(zero_mean,2,S.vec,"/")
+  
   X.scaled.wozero_variance <- X.scaled[,-zero_variance_indices]
   weights_scaled_mat <- matrix(0, ncol(X.scaled.wozero_variance) ,max.iterations)
   weight_vec <- seq(0,0, length.out = ncol(X.scaled.wozero_variance))
@@ -96,3 +97,4 @@ LMLogisticLossIterations <- function(
     return(inv)
   }
 }
+
